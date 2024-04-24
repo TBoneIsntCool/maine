@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Docs</title>
+<link rel="icon" href= 
+"https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico" 
+          type="image/x-icon"> 
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #333;
+  }
+  h1, h2 {
+    font-family: 'Exo 2', sans-serif;
+    color: #fff;
+    margin: 10px 0;
+  }
+  #keypad {
+    border-radius: 20px;
+    background-color: #666;
+    padding: 30px;
+    width: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    outline: none;
+    text-align: center; /* Center the contents */
+    margin: auto; /* Center the keypad */
+  }
+  #display {
+    border-radius: 5px;
+    background-color: #444; /* Darker color */
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: calc(100% - 40px); /* Adjust the width to match the keypad */
+    max-width: 300px; /* Adjust the max-width to fit your preference */
+    overflow: hidden;
+    height: 40px; /* Reduced height */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center text horizontally */
+    color: #fff; /* Text color */
+    border: none; /* Removed border */
+    outline: none; /* Removed outline */
+    margin-bottom: 20px; /* Increased spacing */
+    margin: 0 auto; /* Center the text box */
+    font-size: 18px; /* Increased font size */
+  }
+  button {
+    width: 80px;
+    height: 80px;
+    font-size: 20px;
+    margin: 10px;
+    background-color: #999;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    outline: none;
+  }
+  button:hover {
+    background-color: #333;
+  }
+  .icon {
+    font-size: 24px;
+    vertical-align: middle;
+  }
+  #footer {
+    margin-top: auto;
+    font-size: 14px;
+    color: #fff;
+  }
+</style>
+</head>
+<body>
+<h1>Maverick Public Beta</h1>
+<div id="keypad" tabindex="0">
+  <div id="display"></div>
+  <div>
+    <button onclick="addToDisplay('1')">1</button>
+    <button onclick="addToDisplay('2')">2</button>
+    <button onclick="addToDisplay('3')">3</button>
+  </div>
+  <div>
+    <button onclick="addToDisplay('4')">4</button>
+    <button onclick="addToDisplay('5')">5</button>
+    <button onclick="addToDisplay('6')">6</button>
+  </div>
+  <div>
+    <button onclick="addToDisplay('7')">7</button>
+    <button onclick="addToDisplay('8')">8</button>
+    <button onclick="addToDisplay('9')">9</button>
+  </div>
+  <div>
+    <button style="grid-column: 2;" onclick="addToDisplay('0')">0</button>
+    <button onclick="deleteLast()"><span class="icon">&#x232b;</span></button>
+    <button onclick="checkCode()"><span class="icon">&#x21b2;</span></button>
+  </div>
+</div>
+<h2 id="footer">Code changes every week.</h2>
+
+<script>
+  let displayValue = '';
+
+  function addToDisplay(value) {
+    if (displayValue.length < 4) {
+      displayValue += value;
+      updateDisplay();
+    }
+  }
+
+  function deleteLast() {
+    displayValue = displayValue.slice(0, -1);
+    updateDisplay();
+  }
+
+  function updateDisplay() {
+    document.getElementById('display').innerText = displayValue.replace(/./g, '*');
+  }
+
+  function checkCode() {
+    if (displayValue === '1997') {
+      window.location.href = 'new_page.html'; // Replace 'new_page.html' with your desired page
+    } else {
+      alert('Incorrect code. Please try again.');
+      displayValue = '';
+      updateDisplay();
+    }
+  }
+
+  document.addEventListener('keydown', function(event) {
+    const key = event.key;
+    if (/[0-9]/.test(key)) {
+      addToDisplay(key);
+    } else if (key === 'Backspace') {
+      deleteLast();
+    } else if (key === 'Enter') {
+      checkCode();
+    }
+  });
+</script>
+</body>
+</html>
